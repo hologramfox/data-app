@@ -1,4 +1,5 @@
-FROM python:3.8.10-slim-buster
+# FROM python:3.8.10-slim-buster
+FROM buildpacks:set heroku/python
 
 # WORKDIR /app_project
 # COPY requirements.txt .

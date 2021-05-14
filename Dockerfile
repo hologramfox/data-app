@@ -1,4 +1,4 @@
-FROM python:3.9.2-slim-buster
+FROM python:3.8.10-slim-buster
 
 # WORKDIR /app_project
 # COPY requirements.txt .

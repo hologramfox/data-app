@@ -9,7 +9,6 @@ RUN pip3 install fastapi numpy uvicorn typing pydantic aiofiles jinja2
 
 #EXPOSE 8000
 
-COPY ./app_site /app_site
-COPY ./app_site/site /app_site/site
+COPY ./app /app
 
 CMD ["uvicorn", "app_site.main:app", "--host", "0.0.0.0", "--port", "8000"]

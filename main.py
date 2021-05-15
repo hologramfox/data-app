@@ -54,7 +54,7 @@ def getScore(image_score: ImageScore):
     conn = psycopg2.connect(DATABASE_URL, sslmode='require')
     cur = conn.cursor()
 
-    cur.execute("CREATE TABLE answers (id SERIAL PRIMARY KEY, imagenum integer, answ varchar);")
+    # cur.execute("CREATE TABLE answers (id SERIAL PRIMARY KEY, imagenum integer, answ varchar);")
     cur.execute("INSERT INTO answers (imagenum, answ) VALUES (%s, %s)",(image_score.imageNum, str(image_score.scoreNum)))
 
     conn.commit()

@@ -25,20 +25,32 @@ class ImageScore(BaseModel):
     imageNum: str
     scoreNum: int
 
+# def getScore(image_score: ImageScore):
+#     Path("./scores").mkdir(parents=True, exist_ok=True)
+#     if os.path.isfile('./scores/data.json'):
+#         with open('./scores/data.json', 'r') as fread:
+#             dic = json.load(fread)
+#             if image_score.imageNum in dic.keys():
+#                 dic[str(image_score.imageNum)].append(image_score.scoreNum)
+#             else:
+#                 dic[str(image_score.imageNum)] = [image_score.scoreNum]
+#     else:
+#         dic = {}
+#         dic[str(image_score.imageNum)] = [image_score.scoreNum]
+#     with open('./scores/data.json', 'w') as fwrite:
+#         json.dump(dic, fwrite)
+#     return "ok"
+
 def getScore(image_score: ImageScore):
-    Path("./scores").mkdir(parents=True, exist_ok=True)
-    if os.path.isfile('./scores/data.json'):
-        with open('./scores/data.json', 'r') as fread:
-            dic = json.load(fread)
-            if image_score.imageNum in dic.keys():
-                dic[str(image_score.imageNum)].append(image_score.scoreNum)
-            else:
-                dic[str(image_score.imageNum)] = [image_score.scoreNum]
-    else:
-        dic = {}
-        dic[str(image_score.imageNum)] = [image_score.scoreNum]
-    with open('./scores/data.json', 'w') as fwrite:
-        json.dump(dic, fwrite)
+    client = MongoClient('localhost', 27017)
+    db = client['test-database']
+    collection = db['test-collection']
+    numbers = db.numbers
+    stat_dict = {"image_name":f"image_{str(image_score.imageNum)}", "image_score":[image_score.scoreNum]}
+    # stat_dict[str(image_score.imageNum)] = [image_score.scoreNum]
+
+    result = numbers.insert_one(stat_dict)
+
     return "ok"
 
 @app.post("/saveScore")

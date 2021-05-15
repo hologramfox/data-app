@@ -44,8 +44,8 @@ class ImageScore(BaseModel):
 
 def getScore(image_score: ImageScore):
     client = MongoClient("mongodb+srv://input_user:QceG9PBO27FiDFoi@cluster0.hex3g.mongodb.net/trialSave?retryWrites=true&w=majority")
-    db = client['test-database']
-    collection = db['test-collection']
+    db = client.test
+    collection = db.testcol
     numbers = db.numbers
     stat_dict = {"image_name":f"image_{str(image_score.imageNum)}", "image_score":[image_score.scoreNum]}
     # stat_dict[str(image_score.imageNum)] = [image_score.scoreNum]

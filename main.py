@@ -3,8 +3,6 @@
 from typing import Optional
 import uvicorn
 from fastapi import FastAPI
-#from fastapi.staticfiles import StaticFiles
-#from fastapi.templating import Jinja2Templates
 # import pymongo
 import psycopg2
 
@@ -13,11 +11,8 @@ from pydantic import BaseModel
 import numpy as np
 import os
 from pathlib import Path
-# from imageScore import ImageScore, getScore
 
 app = FastAPI()
-
-#app.mount("/site", StaticFiles(directory="site", html = True), name="site")
 
 @app.get("/test")
 def test():
@@ -59,8 +54,9 @@ def getScore(image_score: ImageScore):
     conn = psycopg2.connect(DATABASE_URL, sslmode='require')
     cur = conn.cursor()
 
-    cur.execute("CREATE TABLE answers (id serial PRIMARY KEY, imagenum varchar, answ varchar);")
-    cur.execute(f"INSERT INTO answers (imagenum, answ) VALUES ({str(image_score.imageNum)}, {str(image_score.scoreNum)});")
+    cur.execute("CREATE TABLE answers (id SERIAL PRIMARY KEY, imagenum integer, answ varchar);")
+    cur.execute("INSERT INTO answers (imagenum, answ) VALUES (%s, %s)",(image_score.imageNum, str(image_score.scoreNum)))
+
     conn.commit()
 
     cur.close()

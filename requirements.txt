@@ -4,3 +4,4 @@ uvicorn
 typing 
 pymongo 
 pydantic
+psycopg2-binary

@@ -60,7 +60,7 @@ def getScore(image_score: ImageScore):
     cur = conn.cursor()
 
     cur.execute("CREATE TABLE answers (id serial PRIMARY KEY, imagenum varchar, answ varchar);")
-    cur.execute(f"INSERT INTO answers (imagenum, answ) VALUES ({str(image_score.imageNum)}, {str(image_score.scoreNum)})")
+    cur.execute(f"INSERT INTO answers (imagenum, answ) VALUES ({str(image_score.imageNum)}, {str(image_score.scoreNum)});")
     conn.commit()
 
     cur.close()
